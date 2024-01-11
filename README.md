@@ -1,28 +1,28 @@
 # How to use Auto macro booking evaluation slots?
 
-# git clone 
-# and follow 6 steps
+<git clone>
+git clone git@github.com:HONGBAEKIM/eval_booker.git
 
-# 0. download selenium
+<download selenium> type in your terminal
 pip install selenium
 
-# 1. Go to your evaluation page and copy last team_id which is xxxxxxx as below
-example https://projects.intra.42.fr/projects/cpp-module-09/slots?team_id=5374260
-and replace team_id number
-#########################################################
-#########################################################
-#########################################################
+# 1. Go to your evaluation page where you can book evaluation slots 
+copy URL of last team_id which is xxxxxxx as below
+
+example 
+https://projects.intra.42.fr/projects/cpp-module-09/slots?team_id=1234567
+
+and replace team_id number in my code
+let me know there is better ID
+
 #everyone has different team_id
 
-#hongbae has "5374260"
-#Ramesh has  "5395823"
+team_id = "xxxxxxx"  # Replace with the actual team ID
 
-team_id = "5374260"  # Replace with the actual team ID
-#########################################################
-#########################################################
-#########################################################
 
-# 2. if you believe my code comment out "nextok.click()"
+# 2. Comment out "nextok.click()"
+if you believe me try it. 
+I have not tried yet.
 ###########last
 ###########last
 ###########last
@@ -30,7 +30,6 @@ team_id = "5374260"  # Replace with the actual team ID
 ###########last
 ###########last
 ###########last
-I have not tried yet.
 
 # 3. Run the program in terminal type below 
 Use last version example now it is eval_booker11.py
