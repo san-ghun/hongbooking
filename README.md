@@ -1,4 +1,4 @@
-# Eval_booker which is Automatically booking evaluation slots
+# Automatically booking the evaluation slots
 
 download selenium if do not have type in your terminal
 
