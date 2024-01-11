@@ -1,9 +1,9 @@
 # How to use Auto macro booking evaluation slots?
 
-<git clone>
+git clone
 git clone git@github.com:HONGBAEKIM/eval_booker.git
 
-<download selenium> type in your terminal
+download selenium type in your terminal
 pip install selenium
 
 # 1. Go to your evaluation page where you can book evaluation slots 
