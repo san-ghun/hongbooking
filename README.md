@@ -1,4 +1,4 @@
-# How to use Auto macro booking evaluation slots?
+# Eval_booker which is Automatically booking evaluation slots
 
 download selenium if do not have type in your terminal
 
