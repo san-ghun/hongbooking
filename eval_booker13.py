@@ -1,3 +1,15 @@
+#added function that you can choose evaluation day.
+#but just today or tomorrow.
+
+# exceptional logic
+# if today() == sunday.
+#   I should go into next week of page and select monday one.
+
+#hmm
+#ok let's try
+
+#Well done. I think Now it works.
+
 # 1.Imports
 import getpass
 from selenium import webdriver
@@ -9,12 +21,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from datetime import datetime
 import time
+#import requests
 
 
 
-
-
-# Set up the Chrome WebDriver
 
 #2.Setup Chrome WebDriver:
 #This line creates a ChromeOptions object, 
@@ -25,14 +35,14 @@ chrome_options.add_experimental_option("debuggerAddress", "localhost:65536")
 
 #This option runs Chrome in headless mode, 
 #it will not display a UI or open a browser window.
-
-
-########options.add_argument("--headless")  # Run in headless mode, without a UI.
-
+########################################################################
+#options.add_argument("--headless")  # Run in headless mode, without a UI.
+########################################################################
 
 driver = webdriver.Chrome()  # Add options=chrome_options if needed
 
 
+#log-in 
 def attempt_login(driver, username, password):
     username_field_id = "username"  # Replace with the actual ID of the username field
     password_field_id = "password"  # Replace with the actual ID of the password field
@@ -67,11 +77,7 @@ def attempt_login(driver, username, password):
         return False  # Return False to indicate login failure
 
 
-
 print("Let's book an evaluation slot automatically")
-
-# Initialize WebDriver (make sure chrome_options is defined if you use it)
-
 
 # Continue with the rest of your script after a successful login
 logged_in = False
@@ -83,6 +89,8 @@ while not logged_in:
     if not logged_in:
         print("Login failed. Please try again.")
 
+
+#Select project
 print("Login script completed")
 print("project_names = libft")
 print("                ftprintf")
@@ -177,9 +185,6 @@ project_name_mapping = {
     "fttran": "ft_transcendence"
 }
 
-
-
-
 def attempt_project_name(project_name):
     
     mapped_name = project_name_mapping.get(project_name, project_name)
@@ -207,62 +212,89 @@ project_name_input = project_name_mapping.get(project_name, project_name)
 # Dynamically build the URL
 base_url = "https://projects.intra.42.fr/projects"
 
-#########################################################
-#########################################################
-#########################################################
-#everyone has different team_id
-#forexample 
-#hongbae has "5374260"
-#Ramesh has  "5395823"
-team_id = "5374260"  # Replace with the actual team ID 
-#########################################################
-#########################################################
-#########################################################
-
-
-
-full_url = f"{base_url}/{project_name_input}/slots?team_id={team_id}"
+full_url = f"{base_url}/{project_name_input}/slots?team_id=True"
 
 # Navigate to the specified slots page
 driver.get(full_url)
 
-
-time.sleep(1)
-
+time.sleep(3)
 
 
-##
-#
-#
-##
-#
-#
-##
-#
-#
-##
-#
-#
-#
-##
-#
-#
-##
-#
-#
-##
-#
-#
-##
-#
-#
-#
+#Put date
+#today or tomorrow
+
+valid_day_names = {"today",
+                 "tomorrow"
+                 #"in_2_days",
+                 #"in_3_days"
+}
+
+project_day_mapping = {
+    "0": "today",
+    "1": "tomorrow"
+    #"2": "in_2_days",
+    #"3": "in_3_days"
+}
+
+def attempt_day(evaluation_day): 
+    day_name = project_day_mapping.get(evaluation_day, evaluation_day)
+    if day_name in valid_day_names:
+        print("Successfully typed day")
+        return True
+    else:
+        print("Invalid day. Please check day list.")
+        return False
+
+
+day_in = False
+while not day_in:
+    print("date : 0      (today)")
+    print("       1      (tomorrow)")
+    #print("       2      (in 2 days)")
+    #print("       3      (in 3 days)")
+
+    evaluation_day = input("Enter your desired evaluation day (0 or 1) : ")
+    day_in = attempt_day(evaluation_day)
+    if not day_in:
+        print("day has not typed. Please try again.")
+
+
+
+#so let's just handle today and tomorrow first!!!!!
+#Here manage if today() is sunday and you want to book tomorrow eval.
+#eval page should be shown next week slot 
+try:         
+    int_evaluation_day = int(evaluation_day)
+    
+    # just for test click next page is working or not
+    #if (int_evaluation_day == 1):
+    current_day = datetime.now().weekday()
+
+    if (int_evaluation_day == 1 and current_day == 6):
+        #I should click next page 
+        try:
+            wait = WebDriverWait(driver, 5)
+            next_page_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right")))       
+            print("next page is ready?")
+            next_page_button.click()
+            print("Clicked next page")
+            int_evaluation_day = 0
+
+        except Exception as e:  # Consider catching specific exceptions
+            print("Exception occurred: ", str(e))
+            # Additional error handling code here
+        
+except TimeoutException:
+        print("Timeout occurred while looking for slots. Refreshing and retrying...")
+        driver.refresh()        
+    
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")
 
 time.sleep(2)
 
-#def attempt_time(driver, start_time, end_time):    
 
-
+#Select time 
 def is_valid_time(time_str):
     try:
         datetime.strptime(time_str, "%H:%M")
@@ -270,17 +302,13 @@ def is_valid_time(time_str):
     except ValueError:
         return False
 
-
-
 def attempt_time(start_time, end_time):
     if is_valid_time(start_time) and is_valid_time(end_time):
         print("Successfully typed desired_eval_time")
         return True
     else:
         print("Invalid time format. Please use HH:MM format.")
-
         return False
-
 
 time_in = False
 while not time_in:
@@ -293,19 +321,9 @@ while not time_in:
     if not time_in:
         print("time has not typed. Please try again.")
 
-#########################################################
-#########################################################
-#########################################################
 # Set the desired time for the slot
 desired_start_time = datetime.strptime(start_time, "%H:%M").time()  # 24-hour format
 desired_end_time = datetime.strptime(end_time, "%H:%M").time()  # 24-hour format
-# desired_start_time = datetime.strptime("13:00", "%H:%M").time()  # 24-hour format
-# desired_end_time = datetime.strptime("23:45", "%H:%M").time()  # 24-hour format
-
-
-#########################################################
-#########################################################
-#########################################################
 
 # Function to convert 12-hour format time to 24-hour format
 def convert_to_24hr_format(time_str):
@@ -335,25 +353,23 @@ while not slot_clicked and attempts < max_retries:
         print(f"{attempts} of {max_retries}")
         time.sleep(1)
 
-        todays_date_str = datetime.today().strftime("%Y-%m-%d")
         try:         
-            #initialize today_colume with 'fc-state-highlight' from html
-            today_column = driver.find_element(By.CSS_SELECTOR, f"td.fc-day.fc-widget-content.fc-today.fc-state-highlight[data-date='{todays_date_str}']")       
-            html_of_element = today_column.get_attribute('outerHTML')
+            
             available_slots_today = []
 
             time.sleep(1)
                        
             current_day = datetime.now().weekday()
-            xpath = f".//tr/td[{current_day + 2}]//div[contains(@class, 'fc-time')]"
+
+            xpath = f".//tr/td[{current_day + 2 + int_evaluation_day}]//div[contains(@class, 'fc-time')]"
+
             slots = driver.find_elements(By.XPATH, xpath)
 
             if (len(slots) == 0):
                 driver.refresh()
-            print("Grab a coffee or tea")
-            print("Hongbae is my name : Hungry baby")
+            print("Grab a coffee and tea or watch a youtube video")
+            print("https://youtu.be/FClqKwgo5Bw?feature=shared")
 
-            
             for slot in slots:
                 print("20 : slot.text", slot.text)
                 
@@ -425,6 +441,4 @@ time.sleep(20)
 #This line closes the browser and ends the WebDriver's session. 
 # It's important to include this to free up resources and not leave the browser running in the background.
 #driver.quit()
-
-
 
