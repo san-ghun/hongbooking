@@ -1,3 +1,5 @@
+You can also do coding or web surf while the program is running
+
 # Automatically booking evaluation slots program
 
 At 42, students are required to schedule evaluation slots for their projects. 
