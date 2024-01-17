@@ -376,10 +376,10 @@ while not slot_clicked and attempts < max_retries:
             print("https://youtu.be/FClqKwgo5Bw?feature=shared")
 
             for slot in slots:
-                print("20 : slot.text", slot.text)
+                print("there is another available slot", slot.text)
                 time_str = slot.get_attribute("data-full").split(" - ")[0]
                 # Debugging: Check the type and value of time_str
-                print("21 : time_str:", time_str, "Type:", type(time_str))
+                #print("21 : time_str:", time_str, "Type:", type(time_str))
 
                 if is_time_within_range(convert_to_24hr_format(time_str), desired_start_time, desired_end_time):
                     print("30 : check time range")
