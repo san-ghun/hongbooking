@@ -13,15 +13,10 @@ download selenium if do not have type in your terminal
 
 pip install selenium
 
-# 1. Comment out "nextok.click()"
-if you believe me try it. 
-
-I have not tried yet.
-
-#nextok.click()
 
 
-# 2. Run the program in terminal type below 
+
+# 0. Run the program in terminal type below 
 Use last version example now it is eval_booker13.py
 
 python3 eval_booker**.py

@@ -402,13 +402,9 @@ while not slot_clicked and attempts < max_retries:
                     nextok = driver.find_element(By.CSS_SELECTOR, "button.btn.btn-primary")
                     if nextok.text == "OK":
                         
-                        ###########last
-                        ###########last
-                        ###########last
-                        #nextok.click()
-                        ###########last
-                        ###########last
-                        ###########last
+                        
+                        nextok.click()
+                        
                         
                         print("Clicked 'OK' button.")
                 except NoSuchElementException:
@@ -440,5 +436,5 @@ time.sleep(20)
 #8.Close the WebDriver:
 #This line closes the browser and ends the WebDriver's session. 
 # It's important to include this to free up resources and not leave the browser running in the background.
-#driver.quit()
+driver.quit()
 
