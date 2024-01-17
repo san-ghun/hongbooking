@@ -1,5 +1,9 @@
 #automatically install selenium if there is no selenium package.
 
+# 1st error - it saied booked but actually it was not
+# so I changed WebDriverWait 5 to 0.5 sec
+# let's see
+
 # 1.Imports
 import getpass
 from selenium import webdriver
@@ -367,15 +371,9 @@ while not slot_clicked and attempts < max_retries:
         time.sleep(1)
 
         try:         
-            
-            available_slots_today = []
-
-            time.sleep(1)
-                       
+            available_slots_today = []                      
             current_day = datetime.now().weekday()
-
             xpath = f".//tr/td[{current_day + 2 + int_evaluation_day}]//div[contains(@class, 'fc-time')]"
-
             slots = driver.find_elements(By.XPATH, xpath)
 
             if (len(slots) == 0):
@@ -385,7 +383,6 @@ while not slot_clicked and attempts < max_retries:
 
             for slot in slots:
                 print("20 : slot.text", slot.text)
-                
                 time_str = slot.get_attribute("data-full").split(" - ")[0]
                 # Debugging: Check the type and value of time_str
                 print("21 : time_str:", time_str, "Type:", type(time_str))
@@ -403,13 +400,13 @@ while not slot_clicked and attempts < max_retries:
 
             for slot in available_slots_today:
                 print("40")
-                WebDriverWait(driver, 3).until(EC.element_to_be_clickable(slot))
+                WebDriverWait(driver, 0.5).until(EC.element_to_be_clickable(slot))
                 print("41")
                 slot.click()
                 print("Clicked on an available slot.")
                 slot_clicked = True
                 
-                time.sleep(5)
+                time.sleep(1)
                 # Find the "OK" button. Adjust the selector as per your page's structure
                 try:
                     nextok = driver.find_element(By.CSS_SELECTOR, "button.btn.btn-primary")
@@ -437,13 +434,9 @@ while not slot_clicked and attempts < max_retries:
         print(f"An unexpected error occurred: {e}")
         break
 
-    time.sleep(2)
-
 if attempts >= max_retries:
     print("Reached the maximum number of retries. Exiting.")
 
-
-time.sleep(20)
 
 # Close the WebDriver
 #8.Close the WebDriver:
