@@ -222,8 +222,6 @@ while not project_name_in:
     if not project_name_in:
         print("Project name is invalid. Please try again.")
 
-time.sleep(1)
-
 project_name_input = project_name_mapping.get(project_name, project_name)
 
 # Dynamically build the URL
@@ -233,8 +231,6 @@ full_url = f"{base_url}/{project_name_input}/slots?team_id=True"
 
 # Navigate to the specified slots page
 driver.get(full_url)
-
-time.sleep(3)
 
 
 #Put date
@@ -307,8 +303,6 @@ except TimeoutException:
     
 except Exception as e:
     print(f"An unexpected error occurred: {e}")
-
-time.sleep(2)
 
 
 #Select time 
@@ -400,7 +394,7 @@ while not slot_clicked and attempts < max_retries:
 
             for slot in available_slots_today:
                 print("40")
-                WebDriverWait(driver, 0.5).until(EC.element_to_be_clickable(slot))
+                WebDriverWait(driver, 1).until(EC.element_to_be_clickable(slot))
                 print("41")
                 slot.click()
                 print("Clicked on an available slot.")
@@ -413,7 +407,7 @@ while not slot_clicked and attempts < max_retries:
                     if nextok.text == "OK":
                         
                         
-                        nextok.click()
+                        #nextok.click()
                         
                         
                         print("Clicked 'OK' button.")
