@@ -407,7 +407,7 @@ while not slot_clicked and attempts < max_retries:
                     if nextok.text == "OK":
                         
                         
-                        #nextok.click()
+                        nextok.click()
                         
                         
                         print("Clicked 'OK' button.")
@@ -431,7 +431,7 @@ while not slot_clicked and attempts < max_retries:
 if attempts >= max_retries:
     print("Reached the maximum number of retries. Exiting.")
 
-
+time.sleep(5)
 # Close the WebDriver
 #8.Close the WebDriver:
 #This line closes the browser and ends the WebDriver's session. 
