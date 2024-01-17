@@ -9,27 +9,7 @@ I have developed an automated code solution
 to streamline the process by reserving evaluation slots 
 as soon as they become accessible.
 
-download selenium if do not have type in your terminal
-
-pip install selenium
-
-
-
-
-# 0. Run the program in terminal type below 
-Use last version example now it is eval_booker13.py
+# 0. Run booking evaluation slots program
 
 python3 eval_booker**.py
-
-
-
-I wanted to make auto macro to book evaluation slots.
-
-because I do not want to spend time to click F5 several times.
-
-
-Update status
-17/Jan/2024
-eval_booker13.py
-
 
