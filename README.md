@@ -21,15 +21,16 @@ as soon as they become accessible.
 Test result
 
 17/Jan
-@rtimsina 
+@rtimsina cpp
 1st working
 2st not working - change time delay 5 sec to 1 sec to click icon 
 
+
 18/Jan
-@ttaneski 
+@ttaneski cpp
 working (selenium should be installed manually first)
 
-@mschaub 
+@mschaub inception
 working (selenium should be installed manually first)
 But if you close chrome page error is shown. maybe later I should fix this.
 
@@ -55,7 +56,11 @@ Stacktrace:
 #15 0x55800fdd2124 <unknown>
 #16 0x7f5adf8edac3 <unknown>
 
+@dwilke minishell
+not working - minishell project name should be 42cursus-minishell
+working - after commenting out project name and put 42cursus-minishell
 
+and fixed project_name_mapping code for minishell 
 
 
 
