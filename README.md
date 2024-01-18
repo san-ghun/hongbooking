@@ -23,4 +23,22 @@ to streamline the process by reserving evaluation slots
 as soon as they become accessible.
 
 
+Test result
+
+17/Jan
+@rtimsina 
+1st working
+2st not working - change time delay 5 sec to 1 sec to click icon 
+
+18/Jan
+@ttaneski 
+working (selenium should be installed manually first)
+
+@mschaub 
+working (selenium should be installed manually first)
+
+
+
+
+
 
