@@ -2,13 +2,6 @@
 
 python3 eval_booker**.py
 
-please install if there is no 'selenium'
-
-pip install selenium
-
-
-
-
 You can also do coding or web surf while the program is running
 
 # Automatically booking evaluation slots program
@@ -21,6 +14,8 @@ or continuously refresh the page.
 I have developed an automated code solution 
 to streamline the process by reserving evaluation slots 
 as soon as they become accessible.
+
+
 
 
 Test result

@@ -1,24 +1,13 @@
-#automatically install selenium if there is no selenium package.
 
 # 1st error - it saied booked but actually it was not
 # so I changed WebDriverWait 5 to 0.5 sec
 # let's see
 
+#automatically install selenium if there is no selenium package.
 # 1.Imports
-import getpass
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from datetime import datetime
-import time
 import subprocess
 import pkg_resources
 import sys  # Import the sys module
-#import requests
 
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
@@ -40,8 +29,16 @@ except pkg_resources.VersionConflict as e:
     # Optionally, upgrade the package or handle the conflict as required
     # install("selenium --upgrade")
 
-
-
+import getpass
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from datetime import datetime
+import time
 
 #2.Setup Chrome WebDriver:
 #This line creates a ChromeOptions object, 
