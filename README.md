@@ -4,7 +4,7 @@ python3 eval_booker**.py
 
 You can also do coding or web surf while the program is running  
 
-# Automatically booking evaluation slots program  
+# Automatically booking evaluation slots  
 
 At 42, students are required to schedule evaluation slots for their projects.  
 Occasionally, due to high demand, available slots may become scarce,  
