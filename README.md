@@ -21,11 +21,10 @@ as soon as they become accessible.
 # Test result
 
 <17/Jan>
-@rtimsina - cpp
-not working - 
-(error001) time delay between click button is shown and actually click button
-(error001) fixed: change time delay 5 sec to 1 sec to click icon 
-
+@rtimsina - cpp <br>
+not working <br>
+(error001) time delay between click button is shown and actually click button <br>
+(error001) fixed: change time delay 5 sec to 1 sec to click icon <br>
 
 <18/Jan>
 @ttaneski - cpp
