@@ -20,27 +20,27 @@ as soon as they become accessible.
 
 # Test result
 
-<17/Jan>
+<17/Jan>  
 @rtimsina - cpp  
 not working  
 (error001) time delay between click button is shown and actually click button  
 (error001) fixed: change time delay 5 sec to 1 sec to click icon  
 
-<18/Jan>
-@ttaneski - cpp
-working
-(error002) I want to do everything with my code even installing "selenium" library
-(error002) fixed: selenium if there is no "selenium" library
+<18/Jan>  
+@ttaneski - cpp  
+working  
+(error002) I want to do everything with my code even installing "selenium" library  
+(error002) fixed: selenium if there is no "selenium" library  
 
-@mschaub - inception
-working
-(error003) when you close chrome page, below error is shown. 
-(error003) not fixed : not critical error so let'see.
+@mschaub - inception  
+working  
+(error003) when you close chrome page, below error is shown.  
+(error003) not fixed : not critical error so let'see.  
 
-An unexpected error occurred: Message: no such window: target window already closed
-from unknown error: web view not found
-  (Session info: chrome=120.0.6099.109)
-Stacktrace:
+An unexpected error occurred: Message: no such window: target window already closed  
+from unknown error: web view not found  
+  (Session info: chrome=120.0.6099.109)  
+Stacktrace:  
 #0 0x55800fdd2f83 <unknown>
 #1 0x55800fa8bcf7 <unknown>
 #2 0x55800fa5f728 <unknown>
@@ -59,13 +59,13 @@ Stacktrace:
 #15 0x55800fdd2124 <unknown>
 #16 0x7f5adf8edac3 <unknown>
 
-@dwilke - minishell
-not working
-(error004) Some project's name has + "42cursus-"
-(error004) fixed : fixed project_name_mapping
+@dwilke - minishell  
+not working  
+(error004) Some project's name has + "42cursus-"  
+(error004) fixed : fixed project_name_mapping  
 
 
-<19/Jan>
-(error005) - random host number was 65536
-(error005) fixed ? : host number is going to be 65536 to 65999
+<19/Jan>  
+(error005) - random host number was 65536  
+(error005) fixed ? : host number is going to be 65536 to 65999  
 
