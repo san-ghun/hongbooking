@@ -28,7 +28,7 @@ not working
 @ttaneski - cpp  
 working  
 (error002) I want to do everything with my code even installing "selenium" library  
-(error002) fixed: selenium if there is no "selenium" library  
+(error002) fixed: installing selenium if there is no "selenium" library  
 
 @mschaub - inception  
 working  
