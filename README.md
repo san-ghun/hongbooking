@@ -18,21 +18,25 @@ as soon as they become accessible.
 
 
 
-Test result
+# Test result
 
-17/Jan
+<17/Jan>
 @rtimsina - cpp
-1st working
-2st not working - change time delay 5 sec to 1 sec to click icon 
+not working - 
+(error001) time delay between click button is shown and actually click button
+(error001) fixed: change time delay 5 sec to 1 sec to click icon 
 
 
-18/Jan
+<18/Jan>
 @ttaneski - cpp
-working (selenium should be installed manually first)
+working
+(error002) I want to do everything with my code even installing "selenium" library
+(error002) fixed: selenium if there is no "selenium" library
 
 @mschaub - inception
-working (selenium should be installed manually first)
-But if you close chrome page error is shown. maybe later I should fix this.
+working
+(error003) when you close chrome page, below error is shown. 
+(error003) not fixed : not critical error so let'see.
 
 An unexpected error occurred: Message: no such window: target window already closed
 from unknown error: web view not found
@@ -57,13 +61,12 @@ Stacktrace:
 #16 0x7f5adf8edac3 <unknown>
 
 @dwilke - minishell
-not working - minishell project name should be 42cursus-minishell
-working - after commenting out project name and put 42cursus-minishell
-
-and fixed project_name_mapping code for minishell 
-
+not working
+(error004) Some project's name has + "42cursus-"
+(error004) fixed : fixed project_name_mapping
 
 
-
-
+<19/Jan>
+(error005) - random host number was 65536
+(error005) fixed ? : host number is going to be 65536 to 65999
 
