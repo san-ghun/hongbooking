@@ -5,6 +5,8 @@
 #but program is forced to close after install selenium
 #so i want to try this
 
+#also want to make random host number 65536 to 65999
+
 # 1.Imports
 import subprocess
 import pkg_resources #to check for installed package
@@ -59,6 +61,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from datetime import datetime
 import time
+import random
 
 
 
@@ -67,7 +70,9 @@ import time
 #which allows you to set various options for the Chrome driver.
 #options = webdriver.ChromeOptions()
 chrome_options = Options()
-chrome_options.add_experimental_option("debuggerAddress", "localhost:65536")
+
+localhost_number = random.ranint(65536, 65999)
+chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
 
 #This option runs Chrome in headless mode, 
 #it will not display a UI or open a browser window.
