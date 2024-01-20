@@ -1,11 +1,19 @@
-# 1st error - projects name for the url
-# fixed
+#Fixed errors
 
-#automatically install selenium if there is no selenium package.
-#but program is forced to close after install selenium
-#so i want to try this
+#1.projects name for the url
+#-> some project has "42cursus-" in front of project name
 
-#also want to make random host number 65536 to 65999
+#2.closed program (after install selenium)
+#-> automatically install selenium if there is no selenium package.
+#-> after install go next step
+
+#3.random host number was 65536 
+#-> it has not been happed yet. 
+#-> but I want to prevent from high demand (traffic jam) for just one host number.  
+#-> now host number is going to be 65536 to 65999
+
+
+
 
 # 1.Imports
 import subprocess
@@ -71,7 +79,7 @@ import random
 #options = webdriver.ChromeOptions()
 chrome_options = Options()
 
-localhost_number = random.ranint(65536, 65999)
+localhost_number = random.randint(65536, 65999)
 chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
 
 #This option runs Chrome in headless mode, 

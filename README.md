@@ -1,69 +1,55 @@
-# 0. Run booking evaluation slots program
-
-python3 eval_booker**.py
-
-You can also do coding or web surf while the program is running
-
-# Automatically booking evaluation slots program
-
-At 42, students are required to schedule evaluation slots for their projects. 
-Occasionally, due to high demand, available slots may become scarce, 
-prompting students to patiently await their availability 
-or continuously refresh the page.
-
-I have developed an automated code solution 
-to streamline the process by reserving evaluation slots 
-as soon as they become accessible.
 
 
+# Automatically booking evaluation slots  
+  
+I have developed a program that automates  
+the process of booking evaluation slots,  
+eliminating the need to manually refresh the evaluation page.  
+  
+Allow me to guide you on its usage:  
+  
+1.Start by logging in with your credentials (ID and password).  
+2.Rest assured that your password remains confidential.  
+3.Specify the project name that you wish to have evaluated.  
+4.Enter '0' for today or '1' for tomorrow.  
+5.Provide the desired start and end times for the evaluation.  
+  
+  
+  
+# 0. Run booking evaluation slots program  
+
+python3 eval_booker**.py  
 
 
-Test result
+# Test result  
 
-17/Jan
-@rtimsina - cpp
-1st working
-2st not working - change time delay 5 sec to 1 sec to click icon 
+<17/Jan>  
+@rtimsina - cpp  
+not working  
+(error001) time delay between click button is shown and actually click button  
+(error001) fixed: change time delay 5 sec to 1 sec to click icon  
 
+<18/Jan>  
+@ttaneski - cpp  
+working  
+(error002) I want to do everything with my code even installing "selenium" library  
+(error002) fixed: installing selenium if there is no "selenium" library  
 
-18/Jan
-@ttaneski - cpp
-working (selenium should be installed manually first)
+@mschaub - inception  
+working  
+(error003) when you force to close chrome page, error occurs.  
+(error003) not fixed : not critical error. let's see.  
 
-@mschaub - inception
-working (selenium should be installed manually first)
-But if you close chrome page error is shown. maybe later I should fix this.
-
-An unexpected error occurred: Message: no such window: target window already closed
-from unknown error: web view not found
-  (Session info: chrome=120.0.6099.109)
-Stacktrace:
-#0 0x55800fdd2f83 <unknown>
-#1 0x55800fa8bcf7 <unknown>
-#2 0x55800fa5f728 <unknown>
-#3 0x55800fb0c69f <unknown>
-#4 0x55800fb23719 <unknown>
-#5 0x55800fb04e53 <unknown>
-#6 0x55800faccdd4 <unknown>
-#7 0x55800face1de <unknown>
-#8 0x55800fd97531 <unknown>
-#9 0x55800fd9b455 <unknown>
-#10 0x55800fd83f55 <unknown>
-#11 0x55800fd9c0ef <unknown>
-#12 0x55800fd6799f <unknown>
-#13 0x55800fdc0008 <unknown>
-#14 0x55800fdc01d7 <unknown>
-#15 0x55800fdd2124 <unknown>
-#16 0x7f5adf8edac3 <unknown>
-
-@dwilke - minishell
-not working - minishell project name should be 42cursus-minishell
-working - after commenting out project name and put 42cursus-minishell
-
-and fixed project_name_mapping code for minishell 
+@dwilke - minishell  
+not working  
+(error004) Some project's name has + "42cursus-"  
+(error004) fixed : fixed project_name_mapping  
 
 
+<19/Jan>  
+(error005) - random host number was 65536  
+(error005) fixed ? : host number is going to be 65536 to 65999  
 
-
-
+@
+(error001 - 2nd) I should check if evaluation slot is booked
 
