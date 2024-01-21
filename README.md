@@ -50,6 +50,8 @@ not working
 (error005) - random host number was 65536  
 (error005) fixed ? : host number is going to be 65536 to 65999  
 
-@
-(error001 - 2nd) I should check if evaluation slot is booked
+and 3 more people tested
+
+(error001 - 2nd) after clicking last step of booking icon I should check if evaluation slot is booked
+(error001 - 2nd) I will fix after I put this code in my homepage
 
