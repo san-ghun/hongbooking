@@ -27,7 +27,7 @@ def handle_form():
     #print(f'End Time: {end_time}')
 
     # Perform further actions with the form data if necessary
-    result = subprocess.run(['python3', 'eval_booker16.py', user_id_from_app, password_from_app, project_name, evaluation_day, start_time, end_time],
+    result = subprocess.run(['python3', 'eval_booker17.py', user_id_from_app, password_from_app, project_name, evaluation_day, start_time, end_time],
                             capture_output=True, text=True)
     # Print both stdout and stderr for debugging
     #print("Output from eval_booker16.py (stdout):", repr(result.stdout))

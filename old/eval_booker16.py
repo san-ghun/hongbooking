@@ -1,6 +1,7 @@
-#after clicking last step of booking icon, I should check if evaluation slot is booked
+#connected to my testing static webpage
 
-#connected to my webpage
+
+
 
 # 1.Imports
 
@@ -20,10 +21,6 @@ import random
 import subprocess
 import os
 import sys
-
-
-
-
 
 
 # Retrieve parameters from command line arguments
@@ -189,7 +186,6 @@ try:
             print("next page is ready?")
             next_page_button.click()
             print("Clicked next page")
-            specialcase = 1
 
         except Exception as e:  # Consider catching specific exceptions
             print("Exception occurred: ", str(e))
