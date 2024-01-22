@@ -86,7 +86,7 @@
                 <select id="start_time" name="start_time" required>
                     {% for hour in range(0, 24) %}
                         {% for minute in ['00', '15', '30', '45'] %}
-                            <option value="{{ '{:02d}'.format(hour) }}:{{ minute }}">{{ '{:02d}'.format(hour) }}:{{ minute }}</option>
+                            <option value="{{ '%02d:%s' | format(hour, minute) }}">{{ '%02d:%s' | format(hour, minute) }}</option>
                         {% endfor %}
                     {% endfor %}
                 </select><br>
@@ -95,10 +95,11 @@
                 <select id="end_time" name="end_time" required>
                     {% for hour in range(0, 24) %}
                         {% for minute in ['00', '15', '30', '45'] %}
-                            <option value="{{ '{:02d}'.format(hour) }}:{{ minute }}">{{ '{:02d}'.format(hour) }}:{{ minute }}</option>
+                            <option value="{{ '%02d:%s' | format(hour, minute) }}">{{ '%02d:%s' | format(hour, minute) }}</option>
                         {% endfor %}
                     {% endfor %}
                 </select><br>
+
 
 
                 <button type="submit">Submit</button>
