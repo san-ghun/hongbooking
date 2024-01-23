@@ -14,7 +14,10 @@ Allow me to guide you on its usage:
 4.Enter '0' for today or '1' for tomorrow.  
 5.Provide the desired start and end times for the evaluation.  
   
-  
+# How to use?
+
+https://youtu.be/MWj3DeJTAtM
+
   
 # 0. Run booking evaluation slots program  
 
