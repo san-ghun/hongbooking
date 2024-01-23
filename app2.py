@@ -19,19 +19,19 @@ def handle_form():
 
     # Process the form data as needed
     # For example, print the data to the console
-    #print(f'User ID: {user_id_from_app}')
+    print(f'User ID: {user_id_from_app}')
     #print(f'User password: {password_from_app}')
-    #print(f'Project Name: {project_name}')
-    #print(f'Evaluation Day: {evaluation_day}')
-    #print(f'Start Time: {start_time}')
-    #print(f'End Time: {end_time}')
+    print(f'Project Name: {project_name}')
+    print(f'Evaluation Day: {evaluation_day}')
+    print(f'Start Time: {start_time}')
+    print(f'End Time: {end_time}')
 
     # Perform further actions with the form data if necessary
-    result = subprocess.run(['python3', 'eval_booker17.py', user_id_from_app, password_from_app, project_name, evaluation_day, start_time, end_time],
+    result = subprocess.run(['python3', 'eval_booker16.py', user_id_from_app, password_from_app, project_name, evaluation_day, start_time, end_time],
                             capture_output=True, text=True)
     # Print both stdout and stderr for debugging
-    #print("Output from eval_booker16.py (stdout):", repr(result.stdout))
-    #print("Output from eval_booker16.py (stderr):", repr(result.stderr))
+    print("Output from eval_booker16.py (stdout):", repr(result.stdout))
+    print("Output from eval_booker16.py (stderr):", repr(result.stderr))
     
     return "Form submitted successfully"
 

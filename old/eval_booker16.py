@@ -1,7 +1,6 @@
-#connected to my testing static webpage
+#after clicking last step of booking icon, I should check if evaluation slot is booked
 
-
-
+#connected to my webpage
 
 # 1.Imports
 
@@ -21,6 +20,10 @@ import random
 import subprocess
 import os
 import sys
+
+
+
+
 
 
 # Retrieve parameters from command line arguments
@@ -49,7 +52,7 @@ os.environ["APP_PASSWORD"] = password_from_app
 #options = webdriver.ChromeOptions()
 chrome_options = Options()
 
-localhost_number = random.randint(65536, 65999)
+localhost_number = random.randint(65536, 79999)
 chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
 
 #This option runs Chrome in headless mode, 
@@ -144,8 +147,6 @@ def attempt_day(evaluation_day):
 
 day_in = False
 while not day_in:
-    
-
     evaluation_day = evaluation_day_from_app
     day_in = attempt_day(evaluation_day)
     if not day_in:
@@ -153,7 +154,7 @@ while not day_in:
 
 int_evaluation_day = int(evaluation_day)
 current_day = datetime.now().weekday()
-
+specialcase = 0
 #today is sunday
 if int_evaluation_day == 1 and current_day == 6:
     specialcase = 1
@@ -186,9 +187,10 @@ try:
             print("next page is ready?")
             next_page_button.click()
             print("Clicked next page")
+            specialcase = 1
 
         except Exception as e:  # Consider catching specific exceptions
-            print("Exception occurred: ", str(e))
+            print(f"Exception occurred: {str(e)}")
             # Additional error handling code here
         
 except TimeoutException:
@@ -204,7 +206,7 @@ except TimeoutException:
                 print("Clicked next page")
                 int_evaluation_day = 0  
             except Exception as e:  # Consider catching specific exceptions
-                print("Exception occurred: ", str(e))
+                print(f"Exception occurred: {str(e)}")
                 # Additional error handling code here 
     
 except Exception as e:
