@@ -18,7 +18,7 @@ Allow me to guide you on its usage:
   
 # 0. Run booking evaluation slots program  
 
-python3 eval_booker**.py  
+python3 hongbook**.py  
 
 
 # Test result  
@@ -54,4 +54,5 @@ and 3 more people tested
 
 (error001 - 2nd) after clicking last step of booking icon I should check if evaluation slot is booked
 (error001 - 2nd) I will fix after I put this code in my homepage
+
 

@@ -440,7 +440,7 @@ while not slot_clicked and attempts < max_retries:
                     if nextok.text == "OK":
                         
                         
-                        nextok.click()
+                        #nextok.click()
                         
                         
                         print("Clicked 'OK' button.")

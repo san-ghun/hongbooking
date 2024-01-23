@@ -80,17 +80,16 @@ def handle_form():
     #2.Setup Chrome WebDriver:
     #This line creates a ChromeOptions object, 
     #which allows you to set various options for the Chrome driver.
-    #options = webdriver.ChromeOptions()
-    chrome_options = Options()
-
-    localhost_number = random.randint(65536, 79999)
-    chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
-
+    chrome_binary_path = '/usr/bin/google-chrome'  # Adjust this path accordingly
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = chrome_binary_path
     #This option runs Chrome in headless mode, 
     #it will not display a UI or open a browser window.
-    ########################################################################
-    #options.add_argument("--headless")  # Run in headless mode, without a UI.
-    ########################################################################
+    chrome_options.add_argument("--headless")
+    
+    
+    localhost_number = random.randint(65536, 79999)
+    chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
 
     driver = webdriver.Chrome()  # Add options=chrome_options if needed
 
@@ -430,4 +429,4 @@ def handle_form():
     return "Form submitted successfully"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
