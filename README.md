@@ -18,12 +18,28 @@ https://youtu.be/MWj3DeJTAtM
 
 [![Video Guide](https://img.youtube.com/vi/MWj3DeJTAtM/0.jpg)](https://www.youtube.com/watch?v=MWj3DeJTAtM)  
   
-   
+  
 # 0. Run booking evaluation slots program  
 
 python3 hongbook**.py  
+  
+  
+  
+# things to implement 
 
+1. Server Management:  
+I've set up an AWS EC2 server and am running the booking program 24/7 on the server.  
+The challenge is managing multiple users simultaneously since each user requires a separate  Chrome browser instance.  
+My goal is to enable access for all 42 students worldwide through a Flask application. 
 
+2. Security Enhancement:  
+I am going to replace the prompt input for ID and password with an API for improved security.  
+
+3. Booking Verification:  
+After a slot is booked, I'll implement a check in the program to ensure that the slot is  genuinely booked. Sometimes, despite successful automation, the booking may not be confirmed if  the program is terminated prematurely.  
+  
+
+  
 # Test result  
 
 <17/Jan>  
