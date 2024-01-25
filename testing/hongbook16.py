@@ -92,13 +92,25 @@ def attempt_login(driver, username, password):
 
 print("Let's book an evaluation slot automatically")
 
+def get_user_name():
+    username = input("Enter your username: ")
+    return username
+
+def get_input_user_name():
+    return input("Enter your username: ")
+
+def get_input_password():
+    return getpass.getpass("Enter your password: ")
+
+
+
 # Continue with the rest of your script after a successful login
 def login_process(driver):
     logged_in = False
 
     while not logged_in:
-        username = input("Enter your username: ")
-        password = getpass.getpass("Enter your password: ")
+        username = get_input_user_name()
+        password = get_input_password()
 
         logged_in = attempt_login(driver, username, password)
 
@@ -106,38 +118,42 @@ def login_process(driver):
             print("Login failed. Please try again.")
 
 
+
+
+
 #Select project
-print("Login script completed")
-print("project_names = libft")
-print("                ftprintf")
-print("                gnl")
-print("                born")
-print("                solong")
-print("                fdf")
-print("                fractol")
-print("                pushswap")
-print("                minitalk")
-print("                pipex")
-print("                philo")
-print("                minishell")
-print("                minirt")
-print("                cub3d")
-print("                netp")
-print("                inc")
-print("                webserv")
-print("                ftirc")
-print("                cpp00")
-print("                cpp01")
-print("                cpp02")
-print("                cpp03")
-print("                cpp04")
-print("                cpp05")
-print("                cpp06")
-print("                cpp07")
-print("                cpp08")
-print("                cpp09")
-print("                fttran")
-print("check above projects name")
+def print_project():
+    print("Login script completed")
+    print("project_names = libft")
+    print("                ftprintf")
+    print("                gnl")
+    print("                born")
+    print("                solong")
+    print("                fdf")
+    print("                fractol")
+    print("                pushswap")
+    print("                minitalk")
+    print("                pipex")
+    print("                philo")
+    print("                minishell")
+    print("                minirt")
+    print("                cub3d")
+    print("                netp")
+    print("                inc")
+    print("                webserv")
+    print("                ftirc")
+    print("                cpp00")
+    print("                cpp01")
+    print("                cpp02")
+    print("                cpp03")
+    print("                cpp04")
+    print("                cpp05")
+    print("                cpp06")
+    print("                cpp07")
+    print("                cpp08")
+    print("                cpp09")
+    print("                fttran")
+    print("check above projects name")
 
 valid_project_names = {"42cursus-libft",
                 "42cursus-ft_printf",
@@ -225,18 +241,21 @@ def get_project_name():
             print("Project name is invalid. Please try again.")
     return project_name_mapping.get(project_name, project_name)
 
+def build_base_url():
+    return "https://projects.intra.42.fr/projects"
 
-def build_eval_page_url(project_name_input):
-    base_url = "https://projects.intra.42.fr/projects"
-    full_url = f"{base_url}/{project_name_input}/slots?team_id=True"
-    return full_url
+
+def go_to_eval_page_url(project_name_input):
+    # base_url = "https://projects.intra.42.fr/projects"
+    full_url = f"{build_base_url()}/{project_name_input}/slots?team_id=True"
+    return driver.get(full_url)
 
 # Navigate to the specified slots page
 #driver.get(full_url)
 
 
 
-driver.get(full_url)
+
 
     #Put date
     #today or tomorrow
@@ -303,53 +322,64 @@ def handle_evaluation_day(driver):
 
 ###########change it to 
 
-    #Select evaluation time 
-    def is_valid_time(time_str):
-        try:
-            datetime.strptime(time_str, "%H:%M")
-            return True
-        except ValueError:
-            return False
+#Select evaluation time 
+def is_valid_time(time_str):
+    try:
+        datetime.strptime(time_str, "%H:%M")
+        return True
+    except ValueError:
+        return False
 
-    def attempt_time(start_time, end_time):
-        if is_valid_time(start_time) and is_valid_time(end_time):
-            print("Successfully typed desired_eval_time")
-            return True
-        else:
-            print("Invalid time format. Please use HH:MM format.")
-            return False
+def attempt_time(check_time):
+    if is_valid_time(check_time):
+        print("Successfully typed desired_eval_time")
+        return True
+    else:
+        print("Invalid time format. Please use HH:MM format.")
+        return False
 
+def get_start_time():
     time_in = False
     while not time_in:
         print("ex) 10:00 AM = 10:00")
         print("ex)  1:00 PM = 13:00")
         start_time = input("Enter your desired start time (24-hour format): ")
-        end_time = input("Enter your desired end time (24-hour format): ")
 
-        time_in = attempt_time(start_time, end_time)
+        time_in = attempt_time(start_time)
         if not time_in:
             print("time has not typed. Please try again.")
+    return start_time
 
-    # Set the desired time for the slot
-    desired_start_time = datetime.strptime(start_time, "%H:%M").time()  # 24-hour format
-    desired_end_time = datetime.strptime(end_time, "%H:%M").time()  # 24-hour format
+def get_end_time():
+    time_in = False
+    while not time_in:
+        end_time = input("Enter your desired end time (24-hour format): ")
 
-    # Function to convert 12-hour format time to 24-hour format
-    def convert_to_24hr_format(time_str):
-        try:
-            return datetime.strptime(time_str, "%I:%M %p").strftime("%H:%M")
-        except ValueError:
-            print(f"Error converting time: {time_str}")
-            return None
+        time_in = attempt_time(end_time)
+        if not time_in:
+            print("time has not typed. Please try again.")
+    return end_time
 
-    # Function to check if the slot time is within the desired range
-    def is_time_within_range(time_str, start_time, end_time):
-        try:
-            slot_time = datetime.strptime(time_str, "%H:%M").time()  # Expecting 24-hour format
-            return start_time <= slot_time <= end_time
-        except ValueError as e:
-            print(f"Error parsing time: {time_str} - {e}")
-            return False
+
+
+
+
+# Function to convert 12-hour format time to 24-hour format
+def convert_to_24hr_format(time_str):
+    try:
+        return datetime.strptime(time_str, "%I:%M %p").strftime("%H:%M")
+    except ValueError:
+        print(f"Error converting time: {time_str}")
+        return None
+
+# Function to check if the slot time is within the desired range
+def is_time_within_range(time_str, start_time, end_time):
+    try:
+        slot_time = datetime.strptime(time_str, "%H:%M").time()  # Expecting 24-hour format
+        return start_time <= slot_time <= end_time
+    except ValueError as e:
+        print(f"Error parsing time: {time_str} - {e}")
+        return False
 
 
 
@@ -383,15 +413,7 @@ def handle_evaluation_day(driver):
 
 
 
-def run_eval_program(driver, full_url, int_evaluation_day, desired_start_time, desired_end_time):
-
-   
-
-
-
-
-
-
+def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time):
 
 
     # This flag will indicate whether a slot has been successfully clicked
@@ -427,7 +449,7 @@ def run_eval_program(driver, full_url, int_evaluation_day, desired_start_time, d
                 if not available_slots_today:
                     print("No slots available within the desired time range.")
                     driver.refresh()
-                    time.sleep(5)
+                    time.sleep(10)
                     continue
                 
 
@@ -439,7 +461,7 @@ def run_eval_program(driver, full_url, int_evaluation_day, desired_start_time, d
                     print("Clicked on an available slot.")
                     slot_clicked = True
                     
-                    time.sleep(1)
+                    time.sleep(2)
                     # Find the "OK" button. Adjust the selector as per your page's structure
                     try:
                         nextok = driver.find_element(By.CSS_SELECTOR, "button.btn.btn-primary")
@@ -447,7 +469,7 @@ def run_eval_program(driver, full_url, int_evaluation_day, desired_start_time, d
 
                             #nextok.click()
                             print("Clicked 'OK' button.")
-                            time.sleep(5)
+                            time.sleep(2)
 
                             
                     except NoSuchElementException:
@@ -458,7 +480,7 @@ def run_eval_program(driver, full_url, int_evaluation_day, desired_start_time, d
             except NoSuchElementException:
                 print("Today's column is not found or not highlighted.")
                 driver.refresh()
-                time.sleep(5)
+                time.sleep(10)
 
         except TimeoutException:
             print("Timeout occurred while looking for slots. Refreshing and retrying...")
@@ -505,7 +527,18 @@ def get_data_scale_team_values(url_current_booking):
 
 ####################################################################
 
+        evaluation_day = get_evaluation_day()
+        int_evaluation_day = int(evaluation_day)
+        handle_evaluation_day(driver)
+        start_time = get_start_time()
+        end_time = get_end_time()
 
+        # Set the desired time for the slot
+        desired_start_time = datetime.strptime(start_time, "%H:%M").time()  # 24-hour format
+        desired_end_time = datetime.strptime(end_time, "%H:%M").time()  # 24-hour format
+
+
+        run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time)
 
 
 ####################################################################
@@ -532,21 +565,12 @@ def get_data_scale_team_values(url_current_booking):
         # Handle any exceptions that may occur
         print(f"Error: {e}")
         return None
+# time.sleep(50)
+
 
     
 
 
-
-
-
-
-
-time.sleep(50)
-# Close the WebDriver
-#8.Close the WebDriver:
-#This line closes the browser and ends the WebDriver's session. 
-# It's important to include this to free up resources and not leave the browser running in the background.
-driver.quit()
 
 
 
@@ -556,18 +580,14 @@ driver.quit()
 def main():
 
     login_process(driver)
+    print_project()
     project_name_input = get_project_name()
-    full_url = build_eval_page_url(project_name_input)
-    
-    evaluation_day = get_evaluation_day()
-    handle_evaluation_day(driver)
+    go_to_eval_page_url(project_name_input)
+
     
 
 
-
-
-
-    url_current_booking = f"{base_url}/{project_name_input}/{username}"
+    url_current_booking = f"{build_base_url}/{project_name_input}/{get_user_name}"
 
     new_values = get_data_scale_team_values(url_current_booking)
 
@@ -577,6 +597,9 @@ def main():
     else:
         print("Try agian")
         #go back to while loop and run
+    driver.quit()
+    
+
 
 if __name__ == "__main__":
     main()
