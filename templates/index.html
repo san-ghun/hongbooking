@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Simple Website</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel="stylesheet" href="{{ style_url }}"> -->
+    <!-- <link rel="stylesheet" href="/static/style.css"> -->
+    <!-- <link rel="stylesheet" href="{{ style_url }}"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
 </head>
 <body>
 
@@ -15,7 +19,7 @@
     <main>
         <section>
             <h2>Input</h2>
-            <form action="{{ url_for('handle_form') }}" method="post" onsubmit="return validateTime()">
+            <form action="{{ url_for('handle_form') }}" method="get" onsubmit="return validateTime()">
                 <label for="user_id" class="label-with-space">ID:</label>
                 <input type="text" id="user_id" name="user_id" required><br>
                 
