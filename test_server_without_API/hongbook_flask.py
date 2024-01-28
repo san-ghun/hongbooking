@@ -78,9 +78,9 @@ def handle_form():
     #2.Setup Chrome WebDriver:
     #This line creates a ChromeOptions object, 
     #which allows you to set various options for the Chrome driver.
-    chrome_binary_path = '/usr/bin/google-chrome'  # Adjust this path accordingly
+    #chrome_binary_path = '/usr/bin/google-chrome'  # Adjust this path accordingly
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = chrome_binary_path
+    #chrome_options.binary_location = chrome_binary_path
     #This option runs Chrome in headless mode, 
     #it will not display a UI or open a browser window.
     # chrome_options.add_argument("--headless")
@@ -447,3 +447,4 @@ def handle_form():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
