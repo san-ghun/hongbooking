@@ -3,6 +3,7 @@
 import pkg_resources #to check for installed package
 
 import getpass
+import subprocess
 from selenium import webdriver
 
 # from selenium.webdriver.chrome.options import Options
@@ -19,14 +20,13 @@ import time
 
 # from pyvirtualdisplay import Display
 import random
-import subprocess
+
 import os
 import sys
 
 #from flask import jsonify
 
 from flask import Flask, render_template, request, url_for, redirect
-import subprocess
 
 app = Flask(__name__)
 
