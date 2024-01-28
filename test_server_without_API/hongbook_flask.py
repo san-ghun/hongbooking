@@ -4,7 +4,11 @@ import pkg_resources #to check for installed package
 
 import getpass
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+
+# from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -79,17 +83,19 @@ def handle_form():
     #This line creates a ChromeOptions object, 
     #which allows you to set various options for the Chrome driver.
     #chrome_binary_path = '/usr/bin/google-chrome'  # Adjust this path accordingly
-    chrome_options = webdriver.ChromeOptions()
+    #chrome_options = webdriver.ChromeOptions()
     #chrome_options.binary_location = chrome_binary_path
     #This option runs Chrome in headless mode, 
     #it will not display a UI or open a browser window.
     # chrome_options.add_argument("--headless")
     
     
-    localhost_number = random.randint(65536, 79999)
-    chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
+    # localhost_number = random.randint(65536, 79999)
+    # chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
 
-    driver = webdriver.Chrome()  # Add options=chrome_options if needed
+    firefox_options = FirefoxOptions()
+
+    driver = Firefox(executable_path='/usr/bin/firefox', options=firefox_options)
 
     login_url = "https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c"
 
