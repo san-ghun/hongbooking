@@ -16,6 +16,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from datetime import datetime
 import time
+
+from pyvirtualdisplay import Display
 import random
 import subprocess
 import os
@@ -43,6 +45,8 @@ def index():
 
 @app.route('/handle_form', methods=['POST'])
 def handle_form():
+    display = Display(visible=0, size=(800, 600))
+    display.start()
     # user_id_from_app = request.form.get('user_id')
     # password_from_app = request.form.get('password')
     project_name_from_app = request.form.get('project_name')
@@ -469,6 +473,7 @@ def handle_form():
     #8.Close the WebDriver:
     #This line closes the browser and ends the WebDriver's session. 
     # It's important to include this to free up resources and not leave the browser running in the background.
+    display.stop()
     driver.quit()
 
     return "Form submitted successfully"
