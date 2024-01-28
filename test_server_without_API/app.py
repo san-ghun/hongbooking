@@ -26,6 +26,8 @@ import subprocess
 
 app = Flask(__name__)
 
+firefox_options = FirefoxOptions()
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -97,7 +99,7 @@ def handle_form():
     # firefox_options.binary_location = '/usr/bin/firefox'
     # driver = Firefox(options=firefox_options)
     
-    firefox_options = FirefoxOptions()
+    
 
     # Specify the path to the geckodriver executable.
     # Create Firefox WebDriver without specifying executable_path.
