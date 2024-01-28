@@ -101,6 +101,7 @@ def handle_form():
 
     # Specify the path to the geckodriver executable.
     # Create Firefox WebDriver without specifying executable_path.
+    
     driver = webdriver.Firefox(options=firefox_options)
 
 
