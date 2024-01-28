@@ -94,9 +94,9 @@ def handle_form():
     # chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
 
     firefox_options = FirefoxOptions()
-
-    driver = Firefox(executable_path='/usr/bin/firefox', options=firefox_options)
-
+    firefox_options.binary_location = '/usr/bin/firefox'
+    driver = Firefox(options=firefox_options)
+    
     login_url = "https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c"
 
     driver.get(login_url)
