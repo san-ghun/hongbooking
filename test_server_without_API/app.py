@@ -17,11 +17,13 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from datetime import datetime
 import time
 
-from pyvirtualdisplay import Display
+# from pyvirtualdisplay import Display
 import random
 import subprocess
 import os
 import sys
+
+from flask import jsonify
 
 from flask import Flask, render_template, request, url_for, redirect
 import subprocess
@@ -45,8 +47,8 @@ def index():
 
 @app.route('/handle_form', methods=['POST'])
 def handle_form():
-    display = Display(visible=0, size=(800, 600))
-    display.start()
+    # display = Display(visible=0, size=(800, 600))
+    # display.start()
     # user_id_from_app = request.form.get('user_id')
     # password_from_app = request.form.get('password')
     project_name_from_app = request.form.get('project_name')
@@ -473,10 +475,13 @@ def handle_form():
     #8.Close the WebDriver:
     #This line closes the browser and ends the WebDriver's session. 
     # It's important to include this to free up resources and not leave the browser running in the background.
-    display.stop()
+    # display.stop()
     driver.quit()
 
-    return "Form submitted successfully"
+    response = jsonify({'redirect_url': 'https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c'})
+    response.headers['Content-Type'] = 'application/json'
+
+    return response
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
