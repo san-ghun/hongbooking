@@ -3,6 +3,7 @@
 import pkg_resources #to check for installed package
 
 import getpass
+
 import subprocess
 from selenium import webdriver
 
@@ -28,8 +29,6 @@ import sys
 
 from flask import Flask, render_template, request, url_for, redirect
 
-app = Flask(__name__)
-
 # Define the default GeckoDriver path
 geckodriver_path = "/usr/local/bin/geckodriver"
 
@@ -39,6 +38,7 @@ firefox_binary_location = '/usr/bin/firefox'
 # Move the definition of firefox_options outside of the function
 firefox_options = FirefoxOptions()
 
+app = Flask(__name__)
 
 @app.route('/')
 def index():
@@ -71,26 +71,6 @@ def handle_form():
 
 
 
-
-
-
-
-    # Retrieve parameters from command line arguments
-    # user_id_from_app = sys.argv[1]
-    # password_from_app = sys.argv[2]
-    # project_name_from_app = sys.argv[3]
-    # evaluation_day_from_app = sys.argv[4]
-    # start_time_from_app = sys.argv[5]
-    # end_time_from_app = sys.argv[6]
-
-    # Process the parameters as needed
-    # print(f'User ID: {user_id_from_app}')
-    # print(f'Password: {password_from_app}')
-    # print(f'Project Name: {project_name_from_app}')
-    # print(f'Evaluation Day: {evaluation_day_from_app}')
-    # print(f'Start Time: {start_time_from_app}')
-    # print(f'End Time: {end_time_from_app}')
-
     # Set the environment variable
     # os.environ["APP_PASSWORD"] = password_from_app
 
@@ -122,12 +102,19 @@ def handle_form():
     firefox_options.executable_path = geckodriver_path
 
     # Instantiate Firefox WebDriver using FirefoxOptions
-    driver = webdriver.Firefox(options=firefox_options)
+    try:
+        # Instantiate Firefox WebDriver using FirefoxOptions
+        driver = webdriver.Firefox(options=firefox_options)
+        login_url = "https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c"
+        
+        # Open the login URL
+        driver.get(login_url)
+        
+        # Further actions with the WebDriver can be added here
 
-
-    login_url = "https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c"
-
-    driver.get(login_url)
+    except Exception as e:
+        print(f"Error initializing WebDriver: {e}")
+        return "Error initializing WebDriver"
 
     # Step 4: Wait for Login Confirmation (Wait until the URL is https://profile.intra.42.fr/)
     try:
@@ -484,6 +471,9 @@ def handle_form():
     # return response
     return "Sucessed"
 
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000)
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)
 
