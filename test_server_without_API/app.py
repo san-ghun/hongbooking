@@ -23,7 +23,7 @@ import subprocess
 import os
 import sys
 
-from flask import jsonify
+#from flask import jsonify
 
 from flask import Flask, render_template, request, url_for, redirect
 import subprocess
@@ -478,10 +478,11 @@ def handle_form():
     # display.stop()
     driver.quit()
 
-    response = jsonify({'redirect_url': 'https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c'})
-    response.headers['Content-Type'] = 'application/json'
+    # response = jsonify({'redirect_url': 'https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c'})
+    # response.headers['Content-Type'] = 'application/json'
 
-    return response
+    # return response
+    return "Sucessed"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
