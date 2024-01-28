@@ -87,7 +87,7 @@ def handle_form():
     #chrome_options.binary_location = chrome_binary_path
     #This option runs Chrome in headless mode, 
     #it will not display a UI or open a browser window.
-    # chrome_options.add_argument("--headless")
+    firefox_options.add_argument('--headless')
     
     
     # localhost_number = random.randint(65536, 79999)
@@ -101,7 +101,7 @@ def handle_form():
 
     # Specify the path to the geckodriver executable.
     # Create Firefox WebDriver without specifying executable_path.
-    
+    firefox_options.binary_location = '/usr/bin/firefox'
     geckodriver_path = "/usr/local/bin/geckodriver"
     driver = webdriver.Firefox(executable_path=geckodriver_path, options=firefox_options)
 
