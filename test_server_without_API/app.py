@@ -97,7 +97,7 @@ def handle_form():
     #chrome_options.binary_location = chrome_binary_path
     #This option runs Chrome in headless mode, 
     #it will not display a UI or open a browser window.
-    firefox_options.add_argument('--headless')
+    #firefox_options.add_argument('--headless')
     
     
     # localhost_number = random.randint(65536, 79999)
