@@ -26,9 +26,15 @@ import subprocess
 
 app = Flask(__name__)
 
+# Define the default GeckoDriver path
+geckodriver_path = "/usr/local/bin/geckodriver"
+
+# Specify the default path to the Firefox binary
+firefox_binary_location = '/usr/bin/firefox'
+
+# Move the definition of firefox_options outside of the function
 firefox_options = FirefoxOptions()
 
-geckodriver_path = "/usr/local/bin/geckodriver"
 
 @app.route('/')
 def index():
@@ -103,11 +109,14 @@ def handle_form():
     
     
 
-    # Specify the path to the geckodriver executable.
-    # Create Firefox WebDriver without specifying executable_path.
-    firefox_options.binary_location = geckodriver_path
-    geckodriver_path = "/usr/local/bin/geckodriver"
-    driver = webdriver.Firefox(executable_path=geckodriver_path, options=firefox_options)
+    # Set the path to the Firefox binary
+    firefox_options.binary_location = firefox_binary_location
+    
+    # Specify the path to the GeckoDriver executable using the executable_path property
+    firefox_options.executable_path = geckodriver_path
+
+    # Instantiate Firefox WebDriver using FirefoxOptions
+    driver = webdriver.Firefox(options=firefox_options)
 
 
     login_url = "https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=e510170b7adc7ed8fc39319b0c9896692df12a594087df4c"
