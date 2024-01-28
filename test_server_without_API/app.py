@@ -111,7 +111,7 @@ def handle_form():
 
     # firefox_options = FirefoxOptions()
     # firefox_options.binary_location = '/usr/bin/firefox'
-    driver = Firefox(options=firefox_options)
+    # driver = Firefox(options=firefox_options)
     
     
 
