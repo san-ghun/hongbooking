@@ -21,7 +21,7 @@ https://youtu.be/MWj3DeJTAtM
   
 # 0. Run booking evaluation slots program  
 
-python3 hongbook**.py  
+python3 hongbooking**.py  
   
   
   
