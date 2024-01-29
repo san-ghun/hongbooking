@@ -446,7 +446,7 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
                         nextok = driver.find_element(By.CSS_SELECTOR, "button.btn.btn-primary")
                         if nextok.text == "OK":
 
-                            #nextok.click()
+                            nextok.click()
                             print("Clicked 'OK' button.")
                             time.sleep(2)
 
