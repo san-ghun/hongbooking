@@ -449,9 +449,9 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
                             nextok.click()
                             print("Clicked 'OK' button.")
                             try:
-                                WebDriverWait(driver, 5).until(EC.url_to_be((f"{half_url}/{project_name_input}/mine", True)))
+                                WebDriverWait(driver, 1).until(EC.url_to_be((f"{half_url}/{project_name_input}/mine", True)))
                             except:
-                                WebDriverWait(driver, 5).until((EC.url_to_be(f"{base_url}/{project_name_input}", True)))
+                                WebDriverWait(driver, 1).until((EC.url_to_be(f"{url_current_booking}", True)))
 
                             
                             
@@ -603,6 +603,7 @@ def main():
     half_url = "https://projects.intra.42.fr"
     base_url = "https://projects.intra.42.fr/projects"
     
+    global url_current_booking
     url_current_booking = f"{base_url}/{project_name_input}"
     print("url_current_booking : ", url_current_booking)
 
