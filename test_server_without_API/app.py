@@ -19,6 +19,8 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from datetime import datetime
 import time
 
+#from flask_wtf.csrf import CSRFProtect, CSRFError
+
 # from pyvirtualdisplay import Display
 import random
 
@@ -40,6 +42,12 @@ firefox_options = FirefoxOptions()
 
 app = Flask(__name__)
 
+# Set a secret key for your Flask app
+#app.config['SECRET_KEY'] = 'your_secure_key_here'  # Replace 'your_secure_key_here' with a secure key
+
+
+#csrf = CSRFProtect(app)
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -49,8 +57,8 @@ def index():
 def handle_form():
     # display = Display(visible=0, size=(800, 600))
     # display.start()
-    # user_id_from_app = request.form.get('user_id')
-    # password_from_app = request.form.get('password')
+    user_id_from_app = request.form.get('user_id')
+    password_from_app = request.form.get('password')
     project_name_from_app = request.form.get('project_name')
     evaluation_day_from_app = request.form.get('evaluation_day')
     start_time_from_app = request.form.get('start_time')
@@ -58,7 +66,7 @@ def handle_form():
 
     # Process the form data as needed
     # For example, print the data to the console
-    # print(f'User ID: {user_id_from_app}')
+    print(f'User ID: {user_id_from_app}')
     #print(f'User password: {password_from_app}')
     print(f'Project Name: {project_name_from_app}')
     print(f'Evaluation Day: {evaluation_day_from_app}')
@@ -116,69 +124,70 @@ def handle_form():
         print(f"Error initializing WebDriver: {e}")
         return "Error initializing WebDriver"
 
+
     # Step 4: Wait for Login Confirmation (Wait until the URL is https://profile.intra.42.fr/)
-    try:
-        # Step 4: Wait for Login Confirmation (Wait until the URL is https://profile.intra.42.fr/)
-        WebDriverWait(driver, 20).until(
-            EC.url_to_be("https://profile.intra.42.fr/")
-        )
-        print("Login confirmed. Continue with your program.")
+    # try:
+    #     # Step 4: Wait for Login Confirmation (Wait until the URL is https://profile.intra.42.fr/)
+    #     WebDriverWait(driver, 20).until(
+    #         EC.url_to_be("https://profile.intra.42.fr/")
+    #     )
+    #     print("Login confirmed. Continue with your program.")
 
         
-        # Now you can trigger the execution of your program.
-        # For example, you can call a function that contains the logic you want to execute.
-        # Your_program_function(project_name_from_app, evaluation_day_from_app, start_time_from_app, end_time_from_app)
+    #     # Now you can trigger the execution of your program.
+    #     # For example, you can call a function that contains the logic you want to execute.
+    #     # Your_program_function(project_name_from_app, evaluation_day_from_app, start_time_from_app, end_time_from_app)
 
-    except TimeoutException:
-        print("Timed out waiting for login confirmation")
-
-
+    # except TimeoutException:
+    #     print("Timed out waiting for login confirmation")
 
 
-    # #log-in 
-    # def attempt_login(driver, username, password):
-    #     username_field_id = "username"  # Replace with the actual ID of the username field
-    #     password_field_id = "password"  # Replace with the actual ID of the password field
 
-    #     try:
-    #         WebDriverWait(driver, 1).until(
-    #             EC.element_to_be_clickable((By.ID, username_field_id))
-    #         )
-    #         username_field = driver.find_element(By.ID, username_field_id)
-    #         username_field.send_keys(username)
 
-    #         WebDriverWait(driver, 1).until(
-    #             EC.element_to_be_clickable((By.ID, password_field_id))
-    #         )
-    #         password_field = driver.find_element(By.ID, password_field_id)
-    #         password_field.send_keys(password)
+    #log-in 
+    def attempt_login(driver, username, password):
+        username_field_id = "username"  # Replace with the actual ID of the username field
+        password_field_id = "password"  # Replace with the actual ID of the password field
 
-    #         password_field.send_keys(Keys.ENTER)
+        try:
+            WebDriverWait(driver, 1).until(
+                EC.element_to_be_clickable((By.ID, username_field_id))
+            )
+            username_field = driver.find_element(By.ID, username_field_id)
+            username_field.send_keys(username)
+
+            WebDriverWait(driver, 1).until(
+                EC.element_to_be_clickable((By.ID, password_field_id))
+            )
+            password_field = driver.find_element(By.ID, password_field_id)
+            password_field.send_keys(password)
+
+            password_field.send_keys(Keys.ENTER)
             
-    #         # Wait for navigation and check if the login was successful
-    #         WebDriverWait(driver, 1).until(EC.url_to_be("https://profile.intra.42.fr/"))
+            # Wait for navigation and check if the login was successful
+            WebDriverWait(driver, 1).until(EC.url_to_be("https://profile.intra.42.fr/"))
 
-    #         print("Successfully logged in")
-    #         return True  # Return True to indicate successful login
+            print("Successfully logged in")
+            return True  # Return True to indicate successful login
 
-    #     except Exception as e:
-    #         print("An error occurred:", e)
-    #         return False  # Return False to indicate login failure
+        except Exception as e:
+            print("An error occurred:", e)
+            return False  # Return False to indicate login failure
 
 
-    # print("Let's book an evaluation slot automatically")
+    print("Let's book an evaluation slot automatically")
 
-    # # Continue with the rest of your script after a successful login
-    # logged_in = False
-    # while not logged_in:
-    #     username = user_id_from_app    
-    #     password = password_from_app
-    #     # print("Username is", username)
-    #     # print("password is", password)
+    # Continue with the rest of your script after a successful login
+    logged_in = False
+    while not logged_in:
+        username = user_id_from_app    
+        password = password_from_app
+        # print("Username is", username)
+        # print("password is", password)
 
-    #     logged_in = attempt_login(driver, username, password)
-    #     if not logged_in:
-    #         print("Login failed. Please try again.")
+        logged_in = attempt_login(driver, username, password)
+        if not logged_in:
+            print("Login failed. Please try again.")
 
 
     # Dynamically build the URL
@@ -472,7 +481,8 @@ def handle_form():
     return "Sucessed"
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(ssl_context=('path/to/cert.pem', 'path/to/key.pem'))
+    app.run(host='127.0.0.1', port=5000)
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
