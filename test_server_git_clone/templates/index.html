@@ -19,26 +19,29 @@
     <main>
         <section>
             
-            <h2> Intra API login </h2>
+            <!-- <h2> Intra API login </h2> -->
+            
             <!-- <h3></h3>  -->
-            <form id="authForm" action="https://api.intra.42.fr/oauth/authorize" method="GET">
+            
+            <!-- <form id="authForm" action="https://api.intra.42.fr/oauth/authorize" method="GET">
                 <input type="hidden" name="client_id" value="CLIENT_UID-OF-INTRA-APP">
                 <input type="hidden" name="redirect_uri" value="https://42test.ktano-studio.com/redirect">
                 <input type="hidden" name="response_type" value="code">
                 <input type="hidden" name="scope" value="public">
                 <input type="hidden" name="state" id="stateInput"> 
                 <button type="submit">Authorize</button>
-            </form>  
+            </form>   -->
             
             
             <h2>Input</h2>
-            <form action="{{ url_for('handle_form') }}" method="get" onsubmit="return validateTime()">
+            <form action="{{ url_for('handle_form') }}" method="POST" onsubmit="return validateTime()">
                 <!-- <label for="user_id" class="label-with-space">ID:</label>
                 <input type="text" id="user_id" name="user_id" required><br>
                 
                 <label for="password" class="label-with-space">Password:</label>
                 <input type="password" id="password" name="password" required><br> -->
-                
+
+
                 <label for="project_name" class="label-with-space">project:</label>
                 <select id="project_name" name="project_name" required>
                     <option value="42cursus-libft">libft</option>
@@ -115,7 +118,16 @@
                 }
             </script>
         </section>
-
+        
+        <!-- <script>
+            // Assuming you are using jQuery for simplicity
+            $.post('/handle_form', formData, function(response) {
+                if (response.redirect_url) {
+                    window.location.href = response.redirect_url;
+                }
+            });
+        </script> -->
+        
     
         <!-- Displaying Python variable in HTML -->
         <section>
