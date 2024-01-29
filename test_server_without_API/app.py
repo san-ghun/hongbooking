@@ -481,7 +481,6 @@ def handle_form():
     return "Sucessed"
 
 if __name__ == '__main__':
-    app.run(ssl_context=('path/to/cert.pem', 'path/to/key.pem'))
     app.run(host='127.0.0.1', port=5000)
 
 # if __name__ == '__main__':
