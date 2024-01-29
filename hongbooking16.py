@@ -414,7 +414,7 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
 
                 if (len(slots) == 0):
                     driver.refresh()
-                print("Grab a coffee and tea or watch a youtube video")
+                print("Grab a coffee or tea or watch a youtube video")
                 print("https://youtu.be/FClqKwgo5Bw?feature=shared")
 
                 for slot in slots:
@@ -428,7 +428,7 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
                 if not available_slots_today:
                     print("No slots available within the desired time range.")
                     driver.refresh()
-                    time.sleep(10)
+                    time.sleep(5)
                     continue
                 
 
@@ -448,8 +448,12 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
 
                             nextok.click()
                             print("Clicked 'OK' button.")
-                            time.sleep(2)
+                            try:
+                                WebDriverWait(driver, 5).until(EC.url_to_be((f"{half_url}/{project_name_input}/mine", True)))
+                            except:
+                                WebDriverWait(driver, 5).until((EC.url_to_be(f"{base_url}/{project_name_input}", True)))
 
+                            
                             
                     except NoSuchElementException:
                         print("OK button not found.")
@@ -459,7 +463,7 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
             except NoSuchElementException:
                 print("Today's column is not found or not highlighted.")
                 driver.refresh()
-                time.sleep(10)
+                time.sleep(5)
 
         except TimeoutException:
             print("Timeout occurred while looking for slots. Refreshing and retrying...")
@@ -494,7 +498,7 @@ def get_data_scale_team_values(url_current_booking):
         # Find the elements with class 'project-item' and attribute 'data-scale-team'
         project_items_before = driver.find_elements(By.CSS_SELECTOR, '.project-item[reminder][data-scale-team]')
         number_project_items_before = len(project_items_before)
-        print("How many booking has already booked : ", number_project_items_before)
+        print("Before click, How many booking has already booked : ", number_project_items_before)
         
 
 
@@ -520,7 +524,7 @@ def get_data_scale_team_values(url_current_booking):
         desired_end_time = datetime.strptime(end_time, "%H:%M").time()  # 24-hour format
 
         
-
+        global base_url
         base_url = "https://projects.intra.42.fr/projects"
         # project_name_in = False
         # while not project_name_in:
@@ -552,9 +556,10 @@ def get_data_scale_team_values(url_current_booking):
         #values_after = set(item.get_attribute('data-scale-team') for item in project_items_after)
 
         number_project_items_after = len(project_items_after)
-        print("How many booking has already booked : ", number_project_items_after)
+        print("after click, How many booking has already booked : ", number_project_items_after)
 
         # Identify newly generated values
+        global new_values
         new_values = number_project_items_after - number_project_items_before
 
         return new_values
@@ -594,27 +599,27 @@ def main():
     global project_name_input
     project_name_input = project_name_mapping.get(project_name, project_name)
 
+    global half_url
+    half_url = "https://projects.intra.42.fr"
     base_url = "https://projects.intra.42.fr/projects"
     
     url_current_booking = f"{base_url}/{project_name_input}"
     print("url_current_booking : ", url_current_booking)
 
-    new_values = get_data_scale_team_values(url_current_booking) 
+    get_data_scale_team_values(url_current_booking) 
         
 
     while(True):
         if new_values == 1:
             print("Successful. Do you want to book next evaluation?")
-            print("If no, close with '/ctrl + c'")
+            print("If no more evaluation then close the program '/ctrl + c'")
             #go back where you can put time and go back to while loop and run
-            url_current_booking = f"{base_url}/{project_name_input}"
-            print("url_current_booking : ", url_current_booking)
-
-            new_values = get_data_scale_team_values(url_current_booking)
+            time.sleep(5)
+            get_data_scale_team_values(url_current_booking)
 
         else:
             run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time)
-            print("Try agian")
+            print("Try again")
             #go back to while loop and run
      
 #driver.quit()
