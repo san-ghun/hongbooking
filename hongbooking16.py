@@ -4,8 +4,8 @@ import pkg_resources #to check for installed package
 import sys  # Import the sys module
 
 def install(library_name):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", library_name])
-
+    result = subprocess.run([sys.executable, "-m", "pip", "install", library_name])
+    return result.returncode
 def is_library_installed(library_name):
     try:
         pkg_resources.get_distribution(library_name)
@@ -19,10 +19,16 @@ if is_library_installed(library_name):
     print(f"{library_name} is already installed.")
 else:
     print(f"{library_name} is not installed. Installing now...")
-    install(library_name)
-    print(f"{library_name} installed successfully.")
+    
+    return_code = install(library_name)
+
+    if return_code == 0:
+        print(f"{library_name} installed successfully.")
+    else:
+        print(f"Error installing {library_name}. Return code: {return_code}")
 
 
+# WebDriverWait(driver, 1).until(EC.url_to_be((f"{half_url}/{project_name_input}/mine", True)))
 import getpass
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -40,20 +46,20 @@ import random
 #2.Setup Chrome WebDriver:
 #This line creates a ChromeOptions object, 
 #which allows you to set various options for the Chrome driver.
-#options = webdriver.ChromeOptions()
+
 chrome_options = Options()
 
 localhost_number = random.randint(65536, 65999)
+
 chrome_options.add_experimental_option("debuggerAddress", f"localhost:{localhost_number}")
+
+driver = webdriver.Chrome()  # Add options=chrome_options if needed
 
 #This option runs Chrome in headless mode, 
 #it will not display a UI or open a browser window.
 ########################################################################
 #options.add_argument("--headless")  # Run in headless mode, without a UI.
 ########################################################################
-
-driver = webdriver.Chrome()  # Add options=chrome_options if needed
-
 
 #log-in 
 def attempt_login(driver, username, password):
@@ -101,14 +107,6 @@ def get_input_user_name():
 
 def get_input_password():
     return getpass.getpass("Enter your password: ")
-
-
-
-# Continue with the rest of your script after a successful login
-
-
-
-
 
 
 #Select project
@@ -222,34 +220,27 @@ def attempt_project_name(project_name):
 
 
 
-
-
-
-
-
-
 # Navigate to the specified slots page
 #driver.get(full_url)
-
-
-
-
 
     #Put date
     #today or tomorrow
 
 valid_day_names = {"today",
                 "tomorrow"
-                #"in_2_days",
-                #"in_3_days"
+                "in_2_days",
+                "in_3_days"
 }
 
 project_day_mapping = {
     "0": "today",
-    "1": "tomorrow"
-    #"2": "in_2_days",
-    #"3": "in_3_days"
+    "1": "tomorrow",
+    "2": "in_2_days",
+    "3": "in_3_days"
 }
+
+global current_day
+current_day = datetime.now().weekday()
 
 def attempt_day(evaluation_day): 
     day_name = project_day_mapping.get(evaluation_day, evaluation_day)
@@ -260,46 +251,59 @@ def attempt_day(evaluation_day):
         print("Invalid day. Please check day list.")
         return False
 
-def get_evaluation_day():
-    day_in = False
-    while not day_in:
-        print("date : 0      (today)")
-        print("       1      (tomorrow)")
-        #print("       2      (in 2 days)")
-        #print("       3      (in 3 days)")
-
-        evaluation_day = input("Enter your desired evaluation day (0 or 1) : ")
-        day_in = attempt_day(evaluation_day)
-        if not day_in:
-            print("day has not typed. Please try again.")
-    return evaluation_day
+def check_specialcase(int_evaluation_day):
+    specialcase = 0
+    #today is sunday
+    if int_evaluation_day == 1 and current_day == 6:
+        specialcase = 1
+    elif int_evaluation_day == 2 and current_day == 6:
+        specialcase = 2
+    elif int_evaluation_day == 3 and current_day == 6:
+        specialcase = 3
+    #today is saturday   
+    elif int_evaluation_day == 2 and current_day == 5:
+        specialcase = 2
+    elif int_evaluation_day == 3 and current_day == 5:
+        specialcase = 3
+    #today is friday 
+    elif int_evaluation_day == 3 and current_day == 4:
+        specialcase = 3
+    else:
+        specialcase = 0
+    return specialcase
 
 
 def handle_evaluation_day(driver):
     try:         
         #int_evaluation_day = int(get_evaluation_day)
-        int_evaluation_day = (get_evaluation_day)
-        current_day = datetime.now().weekday()
-        if (int_evaluation_day == 1 and current_day == 6):
+        if not specialcase == 0:
             try:
-                wait = WebDriverWait(driver, 5)
+                wait = WebDriverWait(driver, 1)
                 next_page_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right")))       
                 print("next page is ready?")
                 next_page_button.click()
                 print("Clicked next page")
-                int_evaluation_day = 0
+                specialcase = 1
             except Exception as e:  
                 print("Exception occurred: ", str(e))
             
     except TimeoutException:
             print("Timeout occurred while looking for slots. Refreshing and retrying...")
-            driver.refresh()        
+            driver.refresh()   
+            if not specialcase == 0:
+                try:
+                    wait = WebDriverWait(driver, 1)
+                    next_page_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right")))       
+                    print("next page is ready?")
+                    next_page_button.click()
+                    print("Clicked next page")
+                    specialcase = 1
+                except Exception as e:  
+                    print("Exception occurred: ", str(e))     
         
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
-
-###########change it to 
 
 #Select evaluation time 
 def is_valid_time(time_str):
@@ -322,6 +326,7 @@ def get_start_time():
     while not time_in:
         print("ex) 10:00 AM = 10:00")
         print("ex)  1:00 PM = 13:00")
+        print("ex)  6:00 PM = 18:00")
         start_time = input("Enter your desired start time (24-hour format): ")
 
         time_in = attempt_time(start_time)
@@ -392,7 +397,7 @@ def is_time_within_range(time_str, start_time, end_time):
 
 
 
-def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time):
+def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time, specialcase):
     driver.get(full_url)
 
     # This flag will indicate whether a slot has been successfully clicked
@@ -408,14 +413,25 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
 
             try:         
                 available_slots_today = []                      
-                current_day = datetime.now().weekday()
-                xpath = f".//tr/td[{current_day + 2 + int_evaluation_day}]//div[contains(@class, 'fc-time')]"
+                if not specialcase == 0:
+                    xpath = f".//tr/td[{current_day + 2 + int_evaluation_day - specialcase}]//div[contains(@class, 'fc-time')]"    
+                else:
+                    xpath = f".//tr/td[{current_day + 2 + int_evaluation_day}]//div[contains(@class, 'fc-time')]"
                 slots = driver.find_elements(By.XPATH, xpath)
 
                 if (len(slots) == 0):
                     driver.refresh()
-                print("Grab a coffee or tea or watch a youtube video")
-                print("https://youtu.be/FClqKwgo5Bw?feature=shared")
+                    if not specialcase == 0:
+                        try:
+                            wait = WebDriverWait(driver, 1)
+                            next_page_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right")))       
+                            next_page_button.click()
+                        except Exception as e:  # Consider catching specific exceptions
+                            print("Exception occurred: ", str(e))
+                            # Additional error handling code here 
+                    time.sleep(1)
+                    print("Grab a coffee or tea or watch a youtube video")
+                    print("https://youtu.be/FClqKwgo5Bw?feature=shared")
 
                 for slot in slots:
                     print("there is another available slot", slot.text)
@@ -428,7 +444,15 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
                 if not available_slots_today:
                     print("No slots available within the desired time range.")
                     driver.refresh()
-                    time.sleep(5)
+                    if not specialcase == 0:
+                        try:
+                            wait = WebDriverWait(driver, 1)
+                            next_page_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right")))       
+                            next_page_button.click()
+                        except Exception as e:  # Consider catching specific exceptions
+                            print("Exception occurred: ", str(e))
+                            # Additional error handling code here 
+                    time.sleep(1)
                     continue
                 
 
@@ -446,7 +470,7 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
                         nextok = driver.find_element(By.CSS_SELECTOR, "button.btn.btn-primary")
                         if nextok.text == "OK":
 
-                            nextok.click()
+                            #nextok.click()
                             print("Clicked 'OK' button.")
                             try:
                                 WebDriverWait(driver, 1).until(EC.url_to_be((f"{half_url}/{project_name_input}/mine", True)))
@@ -463,11 +487,27 @@ def run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end
             except NoSuchElementException:
                 print("Today's column is not found or not highlighted.")
                 driver.refresh()
-                time.sleep(5)
+                if not specialcase == 0:
+                    try:
+                        wait = WebDriverWait(driver, 1)
+                        next_page_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right")))       
+                        next_page_button.click()
+                    except Exception as e:  # Consider catching specific exceptions
+                        print("Exception occurred: ", str(e))
+                        # Additional error handling code here 
+                time.sleep(1)
 
         except TimeoutException:
             print("Timeout occurred while looking for slots. Refreshing and retrying...")
             driver.refresh()
+            if not specialcase == 0:
+                try:
+                    wait = WebDriverWait(driver, 1)
+                    next_page_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right")))       
+                    next_page_button.click()
+                except Exception as e:  # Consider catching specific exceptions
+                    print("Exception occurred: ", str(e))
+                    # Additional error handling code here 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
             break
@@ -509,8 +549,8 @@ def get_data_scale_team_values(url_current_booking):
 
 ####################################################################
 
-        evaluation_day = get_evaluation_day()
-        global int_evaluation_day
+        
+        
         int_evaluation_day = int(evaluation_day)
         handle_evaluation_day(driver)
         start_time = get_start_time()
@@ -538,9 +578,9 @@ def get_data_scale_team_values(url_current_booking):
         full_url = f"{base_url}/{project_name_input}/slots?team_id=True"
         driver.get(full_url)
         print("full_url : ", full_url)
+        specialcase = check_specialcase(int_evaluation_day)
 
-
-        run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time)
+        run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time, specialcase)
 
 
 ####################################################################
@@ -599,6 +639,32 @@ def main():
     global project_name_input
     project_name_input = project_name_mapping.get(project_name, project_name)
 
+    day_in = False
+    while not day_in:
+        print("date : 0      (today)")
+        print("       1      (tomorrow)")
+        print("       2      (in 2 days)")
+        print("       3      (in 3 days)")
+
+        global evaluation_day
+        evaluation_day = input("Enter your desired evaluation day (0, 1, 2 or 3) : ")
+        day_in = attempt_day(evaluation_day)
+        if not day_in:
+            print("day has not typed. Please try again.")
+    
+    specialcase = check_specialcase(evaluation_day)
+    
+
+    #global int_evaluation_day
+    int_evaluation_day = int(evaluation_day)
+    
+
+    
+    
+    #global current_day
+    
+    
+
     global half_url
     half_url = "https://projects.intra.42.fr"
     base_url = "https://projects.intra.42.fr/projects"
@@ -619,7 +685,7 @@ def main():
             get_data_scale_team_values(url_current_booking)
 
         else:
-            run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time)
+            run_eval_program(driver, int_evaluation_day, desired_start_time, desired_end_time, specialcase)
             print("Try again")
             #go back to while loop and run
      
