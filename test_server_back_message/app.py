@@ -186,6 +186,8 @@ def handle_form():
         # print("password is", password)
 
         logged_in = attempt_login(driver, username, password)
+        if logged_in:
+            flash('Login successful', 'success')
         if not logged_in:
             print("Login failed. Please try again.")
 
@@ -475,7 +477,7 @@ def handle_form():
     # response.headers['Content-Type'] = 'application/json'
 
     # return response
-    return "Sucessed"
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':  
     app.run(host='0.0.0.0', port=5000)
