@@ -119,15 +119,26 @@
             </script>
         </section>
         
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for message in messages %}
-                        <div class="flash-message">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+        <section>
+            <h2>Homepage URL</h2>
+            <p>Visit our homepage at <a href="{{ url_for('index') }}">Homepage</a></p>
+        </section>
+
+        {% if login_msg %}
+            <div class="{% if logged_in %}success-message{% else %}error-message{% endif %}">
+                {{ login_msg }}
+            </div>
+        {% endif %}
+
+        <!-- Display loading message -->
+        {% if loading_msg %}
+            <div class="{% if len(slots) == 0 %}success-message{% else %}error-message{% endif %}">
+                {{ loading_msg }}
+            </div>
+        {% endif %}
+
+
+        
         <!-- <script>
             // Assuming you are using jQuery for simplicity
             $.post('/handle_form', formData, function(response) {
@@ -139,18 +150,15 @@
         
     
         <!-- Displaying Python variable in HTML -->
-        <section>
-            <h2>Homepage URL</h2>
-            <p>Visit our homepage at <a href="{{ url_for('index') }}">Homepage</a></p>
-        </section>
+        
     </main>
 
     <footer>
         <p>&copy; 2024 Your Simple Website</p>
     </footer>
 
-    <!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
-    <script src="https://www.hongpage.com/static/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- <script src="https://www.hongpage.com/static/script.js"></script>
 
 </body>
 </html>

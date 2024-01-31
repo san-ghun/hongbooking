@@ -179,6 +179,7 @@ def handle_form():
 
     # Continue with the rest of your script after a successful login
     logged_in = False
+    
     while not logged_in:
         username = user_id_from_app    
         password = password_from_app
@@ -186,10 +187,14 @@ def handle_form():
         # print("password is", password)
 
         logged_in = attempt_login(driver, username, password)
+        login_msg = None
         if logged_in:
-            flash('Login successful', 'success')
-        if not logged_in:
-            print("Login failed. Please try again.")
+            # flash('Login successful', 'success')
+            login_msg = "Login successful! you are now logged in yooooo!!"
+        else:
+            login_msg = "Login failed! Please try again nooooo!!!"
+            # flash('Login error', 'Loginerror')
+            # print("Login failed. Please try again.")
 
 
     # Dynamically build the URL
@@ -368,6 +373,7 @@ def handle_form():
                 slots = driver.find_elements(By.XPATH, xpath)
 
                 if (len(slots) == 0):
+                    loading_msg = "Page loaded successfully! Ready to book the evaluation slot."
                     driver.refresh()
                     if not specialcase == 0:
                         try:
@@ -378,9 +384,14 @@ def handle_form():
                             print("Exception occurred: ", str(e))
                             # Additional error handling code here 
                     time.sleep(10)
+                    loading_msg = None
                     print("Grab a coffee and tea or watch a youtube video")
                     print("https://youtu.be/FClqKwgo5Bw?feature=shared")
+                
+                else:
+                    loading_msg = "Page loading failed. Please try again."
 
+                
                 for slot in slots:
                     print("there is another available slot", slot.text)
                     time_str = slot.get_attribute("data-full").split(" - ")[0]
@@ -477,7 +488,10 @@ def handle_form():
     # response.headers['Content-Type'] = 'application/json'
 
     # return response
-    return redirect(url_for('index'))
+    # return render_template('index', )
+    # return render_template('index.html', login_msg=login_msg, loading_msg=loading_msg, booking_msg=booking_msg)
+    return render_template('index.html', login_msg=login_msg, loading_msg=loading_msg)
+
 
 if __name__ == '__main__':  
     app.run(host='0.0.0.0', port=5000)
